@@ -69,5 +69,6 @@ Fixed by markj.
 
 ## Supporting information
 
+* Security Advisory: https://www.freebsd.org/security/advisories/FreeBSD-SA-20:20.ipv6.asc
 * CVE: https://www.cvedetails.com/cve/CVE-2020-7457/
 * NVD: https://nvd.nist.gov/vuln/detail/CVE-2020-7457
