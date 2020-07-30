@@ -99,5 +99,4 @@ Fixed by emaste.
 ## Supporting information
 
 * Security Advisory: https://www.freebsd.org/security/advisories/FreeBSD-SA-20:13.libalias.asc
-* CVE: https://www.cvedetails.com/cve/CVE-2020-7455/
-* NVD: https://nvd.nist.gov/vuln/detail/CVE-2020-7455
+* CVE: https://nvd.nist.gov/vuln/detail/CVE-2020-7455

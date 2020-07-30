@@ -70,5 +70,4 @@ Fixed by hselasky.
 ## Supporting information
 
 * Security Advisory: https://www.freebsd.org/security/advisories/FreeBSD-SA-20:17.usb.asc
-* CVE: https://www.cvedetails.com/cve/CVE-2020-7456/
-* NVD: https://nvd.nist.gov/vuln/detail/CVE-2020-7456
+* CVE: https://nvd.nist.gov/vuln/detail/CVE-2020-7456

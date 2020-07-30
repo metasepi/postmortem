@@ -65,5 +65,4 @@ Fixed by tuexen.
 ## Supporting information
 
 * Security Advisory: https://www.freebsd.org/security/advisories/FreeBSD-SA-20:14.sctp.asc
-* CVE: https://www.cvedetails.com/cve/CVE-2019-15878/
-* NVD: https://nvd.nist.gov/vuln/detail/CVE-2019-15878
+* CVE: https://nvd.nist.gov/vuln/detail/CVE-2019-15878
