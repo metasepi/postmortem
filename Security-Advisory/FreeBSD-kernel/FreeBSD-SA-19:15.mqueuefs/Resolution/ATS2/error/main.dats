@@ -4,6 +4,7 @@
 (* struct file *)
 typedef struct_file = @{ f_data = ptr }
 
+(* `getmq_read` may return NULL and error code. It should be catch by caller. *)
 fun getmq_read (): [l:addr] (struct_file@l | int, ptr l) =
   undefined()
 
