@@ -12,11 +12,20 @@ int copyin()
 }
 
 int getmq_read(struct file **fpp)
+    //@ requires pointer(fpp, _);
+    /*@
+    ensures
+        switch (result) {
+           case ints_nil: return pointer(fpp, ?p) &*& file_f_data(p, _);
+           case ints_cons(value, values0): return true;
+        };
+    @*/
 {
-    *fpp = malloc(sizeof(struct file));
-    if (NULL == *fpp) {
+    struct file *p = malloc(sizeof(struct file));
+    if (p == NULL) {
         return 1;
     }
+    *fpp = p;
     return 0;
 }
 
