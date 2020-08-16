@@ -48,7 +48,7 @@ int sys_kmq_timedreceive()
     }
     error = copyin();
     if (error) {
-        return error;
+        goto out;
     }
     // Do something
 out:
