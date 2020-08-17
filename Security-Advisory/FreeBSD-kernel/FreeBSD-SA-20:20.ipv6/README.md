@@ -6,50 +6,7 @@ The IPV6_2292PKTOPTIONS set handler was missing synchronization, so racing acces
 
 ## Root Causes
 
-```c
-int
-ip6_ctloutput(struct socket *so, struct sockopt *sopt)
-{
-	int optdatalen, uproto;
-	void *optdata;
-	struct inpcb *inp = sotoinpcb(so);
-	int error, optval;
-	int level, op, optname;
-	int optlen;
-	struct thread *td;
-#ifdef	RSS
-	uint32_t rss_bucket;
-	int retval;
-#endif
-// --snip--
-//				INP_WLOCK(inp); // <= The patch to fix it
-				error = ip6_pcbopts(&inp->in6p_outputopts, m,
-				    so, sopt); // <= Need INP_WLOCK
-//				INP_WUNLOCK(inp); // <= The patch to fix it
-// --snip--
-
-static int
-ip6_pcbopts(struct ip6_pktopts **pktopt, struct mbuf *m,
-    struct socket *so, struct sockopt *sopt)
-{
-	struct ip6_pktopts *opt = *pktopt;
-	int error = 0;
-	struct thread *td = sopt->sopt_td;
-// --snip--
-	if (opt) {
-#ifdef DIAGNOSTIC
-		if (opt->ip6po_pktinfo || opt->ip6po_nexthop ||
-		    opt->ip6po_hbh || opt->ip6po_dest1 || opt->ip6po_dest2 ||
-		    opt->ip6po_rhinfo.ip6po_rhi_rthdr)
-			printf("ip6_pcbopts: all specified options are cleared.\n");
-#endif
-		ip6_clearpktopts(opt, -1);
-	} else {
-		opt = malloc(sizeof(*opt), M_IP6OPT, M_NOWAIT); // <= Forget check NULL
-//		if (opt == NULL) // <= The patch to fix it
-//			return (ENOMEM);
-	}
-```
+* Should lock `struct inpcb` if you modify the struct on `ip6_pcbopts` function
 
 ## Resolution
 
