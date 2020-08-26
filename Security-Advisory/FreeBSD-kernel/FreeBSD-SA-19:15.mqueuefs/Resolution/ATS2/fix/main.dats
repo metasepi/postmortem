@@ -9,25 +9,21 @@ extern fun fdrop {l:addr} (pf_fp: struct_file@l | fp: ptr l): void = "mac#free"
 fun copyin (): int =
   0
 
-(* xxx TODO:
- * `getmq_read` may return NULL and error code.
- * But caller can dereference follong `ptr l`. *)
-fun getmq_read (): [l:addr] (struct_file@l | ptr l, int) =
+fun getmq_read (): [l:addr][i:int] (option_v(struct_file@l, i == 0) | ptr l, int i) =
   undefined()
 
 fun sys_kmq_timedreceive (): int = let
     val (pf_fp | fp, error) = getmq_read()
   in
-    (* xxx TODO:
-     * `fdrop` should not produce atpview `pf_fp` on error case. *)
-    if error != 0 then (fdrop (pf_fp | fp); error)
+    if error != 0 then let prval None_v() = pf_fp in error end
     else let
+        prval Some_v(pf_fp2) = pf_fp
         val error = copyin ()
       in
-        if error != 0 then (fdrop (pf_fp | fp); error)
+        if error != 0 then (fdrop (pf_fp2 | fp); error)
         else
           (* Do something *)
-          (fdrop (pf_fp | fp); error)
+          (fdrop (pf_fp2 | fp); error)
       end
   end
 
