@@ -12,6 +12,12 @@ struct inpcb {
 
 //@ predicate_ctor inpcb(struct inpcb *inpcb)() = inpcb->in6p_outputopts |-> ?p &*& p->ip6po_hlim |-> _;
 
+/*@
+predicate_family_instance thread_run_data(ip6_thread)(struct inpcb *inpcb) =
+    inpcb->in6p_outputopts |-> ?p &*& p->ip6po_hlim |-> _ &*& malloc_block_inpcb(inpcb) &*&
+    [1/10]inpcb->mutex |-> ?mutex &*& [1/10]mutex(mutex, inpcb(inpcb));
+@*/
+
 int ip6_pcbopts(struct ip6_pktopts **pktopt)
     //@ requires pointer(pktopt, ?p) &*& ip6_pktopts_ip6po_hlim(p, _);
     //@ ensures pointer(pktopt, ?p2) &*& ip6_pktopts_ip6po_hlim(p2, 1);
@@ -21,17 +27,30 @@ int ip6_pcbopts(struct ip6_pktopts **pktopt)
 }
 
 int ip6_ctloutput(struct inpcb *inp)
-    //@ requires [1/10]inp->mutex |-> ?mutex &*& [1/10]mutex(mutex, inpcb(inp));
-    //@ ensures [1/10]inp->mutex |-> ?mutex2 &*& [1/10]mutex(mutex2, inpcb(inp));
+    //@ requires thread_run_data(ip6_thread)(inp);
+    //@ ensures thread_run_data(ip6_thread)(inp);
 {
     int error;
+    //@ open thread_run_data(ip6_thread)(inp);
     struct mutex *m = inp->mutex;
     mutex_acquire(m);
     //@ open inpcb(inp)();
     error = ip6_pcbopts(&inp->in6p_outputopts);
     //@ close inpcb(inp)();
     mutex_release(m);
+    //@ close thread_run_data(ip6_thread)(inp);
     return error;
+}
+
+void ip6_thread(struct inpcb *inp)
+    //@ requires thread_run_data(ip6_thread)(inp);
+    //@ ensures false;
+{
+    while (true)
+        //@ invariant thread_run_data(ip6_thread)(inp);
+    {
+        ip6_ctloutput(inp);
+    }
 }
 
 int main()
