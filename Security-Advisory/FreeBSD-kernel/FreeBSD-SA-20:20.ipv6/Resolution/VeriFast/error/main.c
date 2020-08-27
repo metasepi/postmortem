@@ -20,13 +20,17 @@ int ip6_pcbopts(struct ip6_pktopts **pktopt)
     return 0;
 }
 
-int
-ip6_ctloutput(struct inpcb *inp)
-    //@ requires inp->in6p_outputopts |-> ?p &*& ip6_pktopts_ip6po_hlim(p, _);
-    //@ ensures inp->in6p_outputopts |-> ?p2 &*& ip6_pktopts_ip6po_hlim(p2, _);
+int ip6_ctloutput(struct inpcb *inp)
+    //@ requires [1/10]inp->mutex |-> ?mutex &*& [1/10]mutex(mutex, inpcb(inp));
+    //@ ensures [1/10]inp->mutex |-> ?mutex2 &*& [1/10]mutex(mutex2, inpcb(inp));
 {
     int error;
+    struct mutex *m = inp->mutex;
+    mutex_acquire(m);
+    //@ open inpcb(inp)();
     error = ip6_pcbopts(&inp->in6p_outputopts);
+    //@ close inpcb(inp)();
+    mutex_release(m);
     return error;
 }
 
