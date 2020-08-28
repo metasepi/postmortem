@@ -10,21 +10,21 @@ It's [root cause analysis](https://en.wikipedia.org/wiki/Root_cause_analysis).
 On the other hand, are these postmortems common in open source culture?
 No, unfortunately.
 
-This project's goal is finding solutions, such as language/verifier, which are suitable to avoid failures or bugs, which causes security incident.
+This project's goal is finding resolutions, such as language or verifier, which are suitable to avoid failures or bugs, which causes security incident.
 
 ## What do you choose concrete operating system as target?
 
-We are focusing on FreeBSD kernel today, because it has many information about the bugs on [their security advisory](https://www.freebsd.org/security/advisories.html).
+We are focusing on [FreeBSD kernel](https://github.com/freebsd/freebsd/tree/master/sys) today, because it has many informations about the bugs on [their security advisory](https://www.freebsd.org/security/advisories.html).
 
 ## How to avoid the bugs?
 
 There are two choices.
-First is re-writing a part of operating system with language/verifier.
-The part should re-write the patch of security incident and runnalbe.
+First is re-writing a part of operating system with language or verifier.
+The part should re-write the patch of security incident and be runnalbe.
 But this approach needs huge human resource.
 
 Second is writing small pseud code to be proved or verified.
-Now we are choosing this approach with small resource.
+Now, we are choosing this approach with small resource.
 
 Our pseud code is found at following:
 
