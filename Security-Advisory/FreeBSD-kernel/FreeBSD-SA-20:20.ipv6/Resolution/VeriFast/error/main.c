@@ -41,9 +41,9 @@ int ip6_ctloutput(struct inpcb *inp)
     return error;
 }
 
-void ip6_thread(struct inpcb *inp)
+void ip6_thread(struct inpcb *inp) //@ : thread_run
     //@ requires thread_run_data(ip6_thread)(inp);
-    //@ ensures false;
+    //@ ensures true;
 {
     while (true)
         //@ invariant thread_run_data(ip6_thread)(inp);
