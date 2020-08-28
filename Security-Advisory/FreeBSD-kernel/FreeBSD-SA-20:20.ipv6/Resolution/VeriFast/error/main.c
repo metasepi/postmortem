@@ -14,8 +14,7 @@ struct inpcb {
 
 /*@
 predicate_family_instance thread_run_data(ip6_thread)(struct inpcb *inpcb) =
-    inpcb->in6p_outputopts |-> ?p &*& p->ip6po_hlim |-> _ &*& malloc_block_inpcb(inpcb) &*&
-    [1/10]inpcb->mutex |-> ?mutex &*& [1/10]mutex(mutex, inpcb(inpcb));
+    [1/2]inpcb->mutex |-> ?mutex &*& [1/3]mutex(mutex, inpcb(inpcb));
 @*/
 
 int ip6_pcbopts(struct ip6_pktopts **pktopt)
@@ -51,6 +50,14 @@ void ip6_thread(struct inpcb *inp)
     {
         ip6_ctloutput(inp);
     }
+}
+
+void ip6_thread_async(struct inpcb *inp)
+    //@ requires [1/2]inp->mutex |-> ?mutex &*& [1/3]mutex(mutex, inpcb(inp));
+    //@ ensures true;
+{
+    //@ close thread_run_data(ip6_thread)(inp);
+    thread_start(ip6_thread, inp);
 }
 
 int main()
