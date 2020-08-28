@@ -7,7 +7,9 @@ struct ip6_pktopts {
 
 struct inpcb {
     struct ip6_pktopts *in6p_outputopts;
-    struct mutex *mutex; // Instead of `struct rwlock`
+    struct mutex *mutex;
+    /* xxx TODO:
+     * Should implement rwlock instead of mutex? */
 };
 
 //@ predicate_ctor inpcb(struct inpcb *inpcb)() = inpcb->in6p_outputopts |-> ?p &*& p->ip6po_hlim |-> _;
@@ -43,7 +45,7 @@ int ip6_ctloutput(struct inpcb *inp)
 
 void ip6_thread(struct inpcb *inp) //@ : thread_run
     //@ requires thread_run_data(ip6_thread)(inp);
-    //@ ensures true;
+    //@ ensures false;
 {
     while (true)
         //@ invariant thread_run_data(ip6_thread)(inp);
