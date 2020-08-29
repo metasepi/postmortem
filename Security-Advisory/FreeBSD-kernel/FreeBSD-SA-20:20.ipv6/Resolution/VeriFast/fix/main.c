@@ -34,7 +34,11 @@ int ip6_ctloutput(struct inpcb *inp)
     int error;
     //@ open thread_run_data(ip6_thread)(inp);
     struct mutex *m = inp->mutex;
+    mutex_acquire(m);
+    //@ open inpcb(inp)();
     error = ip6_pcbopts(&inp->in6p_outputopts);
+    //@ close inpcb(inp)();
+    mutex_release(m);
     //@ close thread_run_data(ip6_thread)(inp);
     return error;
 }

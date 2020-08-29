@@ -1,5 +1,5 @@
 all:
-	verifast main.c
+	verifast -c main.c
 
 clean:
 

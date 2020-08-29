@@ -10,7 +10,7 @@ The IPV6_2292PKTOPTIONS set handler was missing synchronization, so racing acces
 
 ## Resolution
 
-xxx
+* [VeriFast avoid this issue](./Resolution/VeriFast)
 
 ## File
 
