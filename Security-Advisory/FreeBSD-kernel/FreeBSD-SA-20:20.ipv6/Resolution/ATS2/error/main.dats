@@ -14,7 +14,7 @@ absvtype shared(a:vt@ype) = [l:addr] (a@l | ptr l)
 
 extern fun shared_make{a:vt@ype}{l:addr} (a@l | ptr l): shared(a)
 extern fun shared_ref{a:vt@ype} (!shared(a)): shared(a)
-extern fun shared_unref{a:vt@ype} (shared(a)): [l:addr][c:int] (option_v(a@l, c == 1) | ptr l, int c)
+extern fun shared_unref{a:vt@ype} (shared(a)): [l:addr][c:int] (option_v(a@l, c <= 1) | ptr l, int c)
 
 absview locked_v
 
@@ -61,13 +61,9 @@ implement shared_unref{a}(sh) = let
         val+~SHARED(pf | spin, _, x) = sh
         val () = spin_vt_destroy(spin)
       in
-        (Some_v(pf) | x, 1)
+        (Some_v(pf) | x, c0)
       end
-    else let
-        prval () = $UN.cast2void(sh)
-      in
-        (None_v() | x0, c0)
-      end
+    else let prval () = $UN.cast2void(sh) in (None_v() | x0, c0) end
   end
 
 end // end of [local]
