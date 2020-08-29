@@ -34,6 +34,18 @@ implement shared_make(pf | x) = let
     SHARED(pf | spin, 1, x)
   end
 
+implement shared_ref{a}(sh) = let
+    val+@SHARED(pf | spin, count, _) = sh
+    val spin = unsafe_spin_vt2t(spin)
+    val (pfl | ()) = spin_lock(spin)
+    val c0 = count
+    val () = count := c0 + 1
+    val () = spin_unlock(pfl | spin)
+    prval () = fold@sh
+  in
+    $UN.castvwtp1{shared(a)}(sh)
+  end
+
 end // end of [local]
 
 implement main0 () = {
