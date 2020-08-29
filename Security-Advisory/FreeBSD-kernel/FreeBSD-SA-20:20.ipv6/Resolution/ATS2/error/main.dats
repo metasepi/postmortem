@@ -96,10 +96,10 @@ vtypedef inpcb = @{
 }
 
 implement main0 () = let
-  var opts: ip6_pktopts
-  var inp: inpcb
-  val () = inp.in6p_outputopts := addr@opts
-  val () = inp.sh := shared_make(view@opts | addr@opts)
+    var opts: ip6_pktopts
+    var inp: inpcb
+    val () = inp.in6p_outputopts := addr@opts
+    val () = inp.sh := shared_make(view@opts | addr@opts)
   in
     ignoret(usleep(1000u))
   end
