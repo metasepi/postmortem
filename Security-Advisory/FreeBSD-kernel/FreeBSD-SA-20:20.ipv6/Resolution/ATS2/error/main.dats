@@ -89,5 +89,17 @@ implement shared_unlock{a}(pfl, pf0 | sh, x0) = let
 
 end // end of [local]
 
-implement main0 () = {
+typedef ip6_pktopts = @{ ip6po_hlim = int }
+vtypedef inpcb = @{
+  in6p_outputopts = ptr,
+  sh = shared(ip6_pktopts)
 }
+
+implement main0 () = let
+  var opts: ip6_pktopts
+  var inp: inpcb
+  val () = inp.in6p_outputopts := addr@opts
+  val () = inp.sh := shared_make(view@opts | addr@opts)
+  in
+    ignoret(usleep(1000u))
+  end
