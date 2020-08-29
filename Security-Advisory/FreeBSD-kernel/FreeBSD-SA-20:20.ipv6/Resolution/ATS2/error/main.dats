@@ -46,6 +46,25 @@ implement shared_ref{a}(sh) = let
     $UN.castvwtp1{shared(a)}(sh)
   end
 
+implement shared_unref{a}(sh) = let
+    val+@SHARED(pf | spin, count, _) = sh
+    val spin = unsafe_spin_vt2t(spin)
+    val (pfl | ()) = spin_lock(spin)
+    val c0 = count
+    val () = count := c0 - 1
+    val () = spin_unlock(pfl | spin)
+    prval () = fold@sh
+  in
+    if c0 <= 1
+    then let
+        val+~SHARED(pf2 | spin, _, x) = sh
+        val () = spin_vt_destroy(spin)
+      in
+        Some_vt($UN.castvwtp0{a}(x)) // xxx Should return at-view `pf2`
+      end
+    else let prval () = $UN.cast2void(sh) in None_vt() end
+  end
+
 end // end of [local]
 
 implement main0 () = {
