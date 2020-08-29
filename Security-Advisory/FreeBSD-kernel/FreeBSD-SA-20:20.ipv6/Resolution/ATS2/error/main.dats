@@ -66,6 +66,17 @@ implement shared_unref{a}(sh) = let
     else let prval () = $UN.cast2void(sh) in (None_v() | x0, c0) end
   end
 
+implement shared_lock{a}(sh) = let
+    val+@SHARED(pf | spin, _, x) = sh
+    val spin = unsafe_spin_vt2t(spin)
+    val (pfl | ()) = spin_lock(spin)
+    val x0 = x
+    prval pf0 = $UN.castview1(pf)
+    prval () = fold@sh
+  in
+    ($UN.castview0(pfl), pf0 | x0)
+  end
+
 end // end of [local]
 
 implement main0 () = {
