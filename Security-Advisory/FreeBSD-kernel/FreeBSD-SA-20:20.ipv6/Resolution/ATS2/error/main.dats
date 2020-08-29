@@ -14,7 +14,7 @@ absvtype shared(a:vt@ype) = [l:addr] (a@l | ptr l)
 
 extern fun shared_make{a:vt@ype}{l:addr} (a@l | ptr l): shared(a)
 extern fun shared_ref{a:vt@ype} (!shared(a)): shared(a)
-extern fun shared_unref{a:vt@ype} (shared(a)): Option_vt(a) // xxx ???
+extern fun shared_unref{a:vt@ype} (shared(a)): [l:addr][c:int] (option_v(a@l, c == 1) | ptr l, int c)
 
 absview locked_v
 
@@ -23,7 +23,7 @@ extern fun shared_unlock{a:vt@ype}{l:addr} (locked_v, a@l | !shared(a), ptr l): 
 
 local
 
-datavtype shared_ (a:vt@ype) = {l:addr} SHARED of (a@l | spin1_vt, int, ptr l)
+datavtype shared_ (a:vt@ype) = {l:addr}{c:int} SHARED of (a@l | spin1_vt, int c, ptr l)
 assume shared = shared_
 
 in
@@ -47,22 +47,27 @@ implement shared_ref{a}(sh) = let
   end
 
 implement shared_unref{a}(sh) = let
-    val+@SHARED(pf | spin, count, _) = sh
+    val+@SHARED(pf | spin, count, x) = sh
     val spin = unsafe_spin_vt2t(spin)
     val (pfl | ()) = spin_lock(spin)
     val c0 = count
     val () = count := c0 - 1
+    val x0 = x
     val () = spin_unlock(pfl | spin)
     prval () = fold@sh
   in
     if c0 <= 1
     then let
-        val+~SHARED(pf2 | spin, _, x) = sh
+        val+~SHARED(pf | spin, _, x) = sh
         val () = spin_vt_destroy(spin)
       in
-        Some_vt($UN.castvwtp0{a}(x)) // xxx Should return at-view `pf2`
+        (Some_v(pf) | x, 1)
       end
-    else let prval () = $UN.cast2void(sh) in None_vt() end
+    else let
+        prval () = $UN.cast2void(sh)
+      in
+        (None_v() | x0, c0)
+      end
   end
 
 end // end of [local]
