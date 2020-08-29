@@ -16,7 +16,7 @@ struct inpcb {
 
 /*@
 predicate_family_instance thread_run_data(ip6_thread)(struct inpcb *inpcb) =
-    [1/2]inpcb->mutex |-> ?mutex &*& [1/3]mutex(mutex, inpcb(inpcb));
+    [1/100]inpcb->mutex |-> ?mutex &*& [1/100]mutex(mutex, inpcb(inpcb));
 @*/
 
 int ip6_pcbopts(struct ip6_pktopts **pktopt)
@@ -55,7 +55,7 @@ void ip6_thread(struct inpcb *inp) //@ : thread_run
 }
 
 void ip6_thread_async(struct inpcb *inp)
-    //@ requires [1/2]inp->mutex |-> ?mutex &*& [1/3]mutex(mutex, inpcb(inp));
+    //@ requires [1/100]inp->mutex |-> ?mutex &*& [1/100]mutex(mutex, inpcb(inp));
     //@ ensures true;
 {
     //@ close thread_run_data(ip6_thread)(inp);
@@ -75,6 +75,10 @@ int main()
     //@ close create_mutex_ghost_arg(inpcb(inp));
     struct mutex *mutex = create_mutex();
     inp->mutex = mutex;
+
+    ip6_thread_async(inp);
+    ip6_thread_async(inp);
+    ip6_thread_async(inp);
 
     while (true)
         //@ invariant true;
