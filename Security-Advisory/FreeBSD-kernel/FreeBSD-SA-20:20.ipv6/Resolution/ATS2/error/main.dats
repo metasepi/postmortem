@@ -23,6 +23,7 @@ extern fun shared_unlock{a:vt@ype}{l:addr} (locked_v, a@l | !shared(a), ptr l): 
 
 local
 
+extern praxi _unsafe_consume_atview{a:vt0p}{l:addr} (pf: a@l):<prf> void
 datavtype shared_ (a:vt@ype) = {l:addr}{c:int} SHARED of (a@l | spin1_vt, int c, ptr l)
 assume shared = shared_
 
@@ -75,6 +76,15 @@ implement shared_lock{a}(sh) = let
     prval () = fold@sh
   in
     ($UN.castview0(pfl), pf0 | x0)
+  end
+
+implement shared_unlock{a}(pfl, pf0 | sh, x0) = let
+    val+@SHARED(pf | spin, _, _) = sh
+    val spin = unsafe_spin_vt2t(spin)
+    prval () = _unsafe_consume_atview(pf0)
+    val () = spin_unlock($UN.castview0(pfl) | spin)
+    prval () = fold@sh
+  in
   end
 
 end // end of [local]
