@@ -56,7 +56,7 @@ You can write `goto out` instead of `return error` to [fix this bug](./Security-
 
 We are testing this program on [Debian GNU/Linux](https://www.debian.org/).
 
-## Proof and verify
+## Prove and verify
 
 ```
 $ git clone git@github.com:metasepi/postmortem.git
