@@ -30,47 +30,23 @@ Our pseud code is found at following:
 
 * [Postmortem for FreeBSD kernel](./Security-Advisory/FreeBSD-kernel)
 
-For example, [following ATS2 pseud code](./Security-Advisory/FreeBSD-kernel/FreeBSD-SA-19:15.mqueuefs/Resolution/ATS2/error/main.dats) causes compile error:
+## An example of [ATS2](http://www.ats-lang.org/) language
 
-```ats
-#include "share/atspre_define.hats"
-#include "share/atspre_staload.hats"
-
-(* struct file *)
-typedef struct_file = @{ f_data = ptr }
-
-extern fun fdrop {l:addr} (pf_fp: struct_file@l | fp: ptr l): void = "mac#free"
-
-fun copyin (): int =
-  0
-
-fun getmq_read (): [l:addr][i:int] (option_v(struct_file@l, i == 0) | ptr l, int i) =
-  undefined()
-
-fun sys_kmq_timedreceive (): int = let
-    val (pf_fp | fp, error) = getmq_read()
-  in
-    if error != 0 then let prval None_v() = pf_fp in error end
-    else let
-        prval Some_v(pf_fp2) = pf_fp
-        val error = copyin ()
-      in
-        if error != 0 then error
-        else
-          (* Do something *)
-          (fdrop (pf_fp2 | fp); error)
-      end
-  end
-
-implement main0 () = {
-}
-```
-
-because above code forgets `fdrop` after calling `copyin`.
+For example, [the ATS2 pseud code](./Security-Advisory/FreeBSD-kernel/FreeBSD-SA-19:15.mqueuefs/Resolution/ATS2/error/main.dats) causes compile error,
+because the code forgets `fdrop` after calling `copyin`.
 This mistake occurred at [FreeBSD-SA-19:15.mqueuefs](./Security-Advisory/FreeBSD-kernel/FreeBSD-SA-19:15.mqueuefs).
 It means this bug may be avoided, if FreeBSD was written by ATS2 language.
 
 You can add `fdrop` calling to [fix this bug](./Security-Advisory/FreeBSD-kernel/FreeBSD-SA-19:15.mqueuefs/Resolution/ATS2/fix/main.dats).
+
+## An example of [VeriFast](https://github.com/verifast/verifast) verifier
+
+For example, [the C pseud code with annotations](./Security-Advisory/FreeBSD-kernel/FreeBSD-SA-19:15.mqueuefs/Resolution/VeriFast/error/main.c) causes error on verification,
+because the code just returns without calling `fdrop`.
+This mistake occurred at [FreeBSD-SA-19:15.mqueuefs](./Security-Advisory/FreeBSD-kernel/FreeBSD-SA-19:15.mqueuefs).
+It means this bug may be avoided, if FreeBSD was verified by VeriFast verifier.
+
+You can write `goto out` instead of `return error` to [fix this bug](./Security-Advisory/FreeBSD-kernel/FreeBSD-SA-19:15.mqueuefs/Resolution/VeriFast/fix/main.c).
 
 ## Requirements
 
