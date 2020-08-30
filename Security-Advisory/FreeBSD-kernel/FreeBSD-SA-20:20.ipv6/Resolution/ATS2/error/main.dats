@@ -96,14 +96,15 @@ vtypedef inpcb = @{
 }
 
 implement main0 () = let
-    var opts: ip6_pktopts
+    var opts: ip6_pktopts with opts_pf
     var inp: inpcb
     val () = inp.in6p_outputopts := addr@opts
-    val () = inp.sh := shared_make(view@opts | addr@opts)
+    val () = inp.sh := shared_make(opts_pf | addr@opts)
     val (pf_oopts | x, count) = shared_unref(inp.sh)
     val () = assertloc(count <= 1)
     prval Some_v(pf_opts) = pf_oopts
-    prval () = view@opts := pf_opts
+    val () = assertloc(x = addr@opts)
+    prval () = opts_pf := pf_opts
   in
     ignoret(usleep(1000u))
   end
