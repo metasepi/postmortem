@@ -91,22 +91,25 @@ end // end of [local]
 
 typedef ip6_pktopts = @{ ip6po_hlim = int }
 
-extern fun ip6_thread{a:vt@ype}{l:addr} (sh: !shared(a, l)): void
+extern fun ip6_thread{a:vt@ype}{l:addr} (sh: shared(a, l)): void
+extern praxi _unsafe_consume_atview{a:vt0p}{l:addr} (pf: a@l):<prf> void
 
 implement ip6_thread(sh) = {
+  val (pfl, pf | x) = shared_lock(sh)
   // xxx implement me
+  val () = shared_unlock(pfl, pf | sh, x)
+  val (_ | _, _) = shared_unref(sh)
 }
 
 implement main0() = let
     var opts: ip6_pktopts
     val sh_inp0 = shared_make(view@opts | addr@opts)
-    val _ = athread_create_cloptr_exn (llam () => ip6_thread(sh_inp0))
     val sh_inp1 = shared_ref(sh_inp0)
-    val _ = athread_create_cloptr_exn (llam () => ip6_thread(sh_inp1))
     val sh_inp2 = shared_ref(sh_inp0)
+    val sh_inp3 = shared_ref(sh_inp0)
+    val _ = athread_create_cloptr_exn (llam () => ip6_thread(sh_inp1))
     val _ = athread_create_cloptr_exn (llam () => ip6_thread(sh_inp2))
-    val (_ | _, _) = shared_unref(sh_inp2)
-    val (_ | _, _) = shared_unref(sh_inp1)
+    val _ = athread_create_cloptr_exn (llam () => ip6_thread(sh_inp3))
     val (pf_oopts | _, count) = shared_unref(sh_inp0)
     val () = assertloc(count <= 1)
     prval Some_v(pf_opts) = pf_oopts
