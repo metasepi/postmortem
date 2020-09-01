@@ -106,9 +106,11 @@ implement ip6_pcbopts(pf | x) = let
   end
 
 implement ip6_ctloutput(sh) = let
+    val (pfl, pf | x) = shared_lock{ip6_pktopts}(sh)
     (* xxx TODO:
      * Can be locked twice. *)
     val error = ip6_pcbopts(pf | x)
+    val () = shared_unlock(pfl, pf | sh, x)
   in
     error
   end
