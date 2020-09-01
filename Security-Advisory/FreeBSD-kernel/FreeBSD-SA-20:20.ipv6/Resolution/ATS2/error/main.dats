@@ -91,15 +91,31 @@ end // end of [local]
 
 typedef ip6_pktopts = @{ ip6po_hlim = int }
 
+extern fun ip6_pcbopts{l:addr}(!ip6_pktopts@l | ptr l): int
+extern fun ip6_ctloutput{a:vt@ype}{l:addr} (sh: !shared(a, l)): int
 extern fun ip6_thread{a:vt@ype}{l:addr} (sh: shared(a, l)): void
-extern praxi _unsafe_consume_atview{a:vt0p}{l:addr} (pf: a@l):<prf> void
 
-implement ip6_thread(sh) = {
-  val (pfl, pf | x) = shared_lock(sh)
-  // xxx implement me
-  val () = shared_unlock(pfl, pf | sh, x)
-  val (_ | _, _) = shared_unref(sh)
-}
+implement ip6_pcbopts(pf | x) =
+  0
+
+implement ip6_ctloutput(sh) = let
+    val (pfl, pf | x) = shared_lock{ip6_pktopts}(sh)
+    val error = ip6_pcbopts(pf | x)
+    val () = shared_unlock(pfl, pf | sh, x)
+  in
+    error
+  end
+
+implement ip6_thread(sh) = let
+    fun loop{a:vt@ype}{l:addr}(sh: !shared(a, l)): void = let
+        val _ = ip6_ctloutput(sh)
+      in
+        loop(sh)
+      end
+    val () = loop(sh)
+    val (_ | _, _) = shared_unref(sh)
+  in
+  end
 
 implement main0() = let
     var opts: ip6_pktopts
