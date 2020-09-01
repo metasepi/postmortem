@@ -92,11 +92,11 @@ end // end of [local]
 typedef ip6_pktopts = @{ ip6po_hlim = int }
 
 extern fun ip6_pcbopts{l:addr}(!ip6_pktopts@l | ptr l): int
-extern fun ip6_ctloutput{a:vt@ype}{l:addr} (sh: !shared(a, l)): int
-extern fun ip6_thread{a:vt@ype}{l:addr} (sh: shared(a, l)): void
+extern fun ip6_ctloutput{l:addr} (sh: !shared(ip6_pktopts, l)): int
+extern fun ip6_thread{l:addr} (sh: shared(ip6_pktopts, l)): void
 
 implement ip6_pcbopts(pf | x) =
-  0
+  0 // xxx implement me
 
 implement ip6_ctloutput(sh) = let
     val (pfl, pf | x) = shared_lock{ip6_pktopts}(sh)
@@ -107,7 +107,7 @@ implement ip6_ctloutput(sh) = let
   end
 
 implement ip6_thread(sh) = let
-    fun loop{a:vt@ype}{l:addr}(sh: !shared(a, l)): void = let
+    fun loop{l:addr}(sh: !shared(ip6_pktopts, l)): void = let
         val _ = ip6_ctloutput(sh)
       in
         loop(sh)
@@ -119,7 +119,7 @@ implement ip6_thread(sh) = let
 
 implement main0() = let
     var opts: ip6_pktopts
-    val sh_inp0 = shared_make(view@opts | addr@opts)
+    val sh_inp0 = shared_make{ip6_pktopts}(view@opts | addr@opts)
     val sh_inp1 = shared_ref(sh_inp0)
     val sh_inp2 = shared_ref(sh_inp0)
     val sh_inp3 = shared_ref(sh_inp0)
