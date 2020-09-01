@@ -71,6 +71,8 @@ implement shared_lock{a}(sh) = let
     val+@SHARED(pf | spin, _, x) = sh
     val spin = unsafe_spin_vt2t(spin)
     val (pfl | ()) = spin_lock(spin)
+    (* xxx TODO:
+     * Should implement rwlock instead of spin lock? *)
     val x0 = x
     prval pf0 = $UN.castview1(pf)
     prval () = fold@sh
@@ -90,13 +92,18 @@ implement shared_unlock{a}(pfl, pf0 | sh, x0) = let
 end // end of [local]
 
 typedef ip6_pktopts = @{ ip6po_hlim = int }
+(* xxx TODO:
+ * Should support the structure `inpcb`? *)
 
 extern fun ip6_pcbopts{l:addr}(!ip6_pktopts@l | ptr l): int
 extern fun ip6_ctloutput{l:addr} (sh: !shared(ip6_pktopts, l)): int
 extern fun ip6_thread{l:addr} (sh: shared(ip6_pktopts, l)): void
 
-implement ip6_pcbopts(pf | x) =
-  0 // xxx implement me
+implement ip6_pcbopts(pf | x) = let
+    val () = !x.ip6po_hlim := 1
+  in
+    0
+  end
 
 implement ip6_ctloutput(sh) = let
     val (pfl, pf | x) = shared_lock{ip6_pktopts}(sh)
