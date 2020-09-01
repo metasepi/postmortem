@@ -119,6 +119,7 @@ implement ip6_thread(sh) = let
 
 implement main0() = let
     var opts: ip6_pktopts
+    val () = opts.ip6po_hlim := 0
     val sh_inp0 = shared_make{ip6_pktopts}(view@opts | addr@opts)
     val sh_inp1 = shared_ref(sh_inp0)
     val sh_inp2 = shared_ref(sh_inp0)
