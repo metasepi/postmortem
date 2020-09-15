@@ -10,7 +10,8 @@ System calls operating on file descriptors obtain a reference to relevant struct
 
 ## Resolution
 
-xxx
+* [ATS2 avoid this issue](./Resolution/ATS2)
+* [VeriFast avoid this issue](./Resolution/VeriFast)
 
 ## File
 
