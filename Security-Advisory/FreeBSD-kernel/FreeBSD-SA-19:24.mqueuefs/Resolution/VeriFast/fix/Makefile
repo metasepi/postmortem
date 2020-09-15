@@ -1,1 +1,1 @@
-include ../../../../../../mk/verifast-error.mk
+include ../../../../../../mk/verifast-fix.mk
