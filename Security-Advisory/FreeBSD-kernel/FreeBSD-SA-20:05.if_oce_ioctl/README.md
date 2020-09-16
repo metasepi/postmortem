@@ -10,7 +10,9 @@ The driver-specific ioctl(2) command handlers in oce(4) failed to check whether 
 
 ## Resolution
 
-xxx
+* `oce_handle_passthrough` just updates device firmware
+* There are no hints that caller should call `priv_check`
+* We can't avoid this issue
 
 ## File
 
