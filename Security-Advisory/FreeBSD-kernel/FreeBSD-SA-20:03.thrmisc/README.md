@@ -7,6 +7,7 @@ Due to incorrect initialization of a stack data structure, up to 20 bytes of ker
 ## Root Causes
 
 * Clear the entire thrmisc struct to avoid kernel stack data leak
+* It's caused by uninitialized value
 
 ## Resolution
 
