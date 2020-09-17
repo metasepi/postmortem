@@ -12,6 +12,7 @@ Due to incorrect initialization of a stack data structure, up to 20 bytes of ker
 ## Resolution
 
 * [ATS2 avoid this issue](./Resolution/ATS2)
+* VeriFast can't avoid this issue
 
 ## File
 
