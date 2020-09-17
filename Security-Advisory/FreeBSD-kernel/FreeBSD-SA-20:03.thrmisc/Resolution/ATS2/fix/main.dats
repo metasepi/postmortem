@@ -18,10 +18,10 @@ fun sbuf_bcat_thrmisc {l:addr} (pf: !elf_thrmisc_t @ l | p: ptr l): void =
 
 fun note_thrmisc(): void = {
   var thrmisc: elf_thrmisc_t
-  prval pf_thrmisc_pad = view@thrmisc._pad
-  val addr_thrmisc_pad = addr@thrmisc._pad
-  val () = bzero(pf_thrmisc_pad | addr_thrmisc_pad)
-  prval () = view@thrmisc._pad := pf_thrmisc_pad
+  prval pf_thrmisc = view@thrmisc
+  val addr_thrmisc = addr@thrmisc
+  val () = bzero(pf_thrmisc | addr_thrmisc)
+  prval () = view@thrmisc := pf_thrmisc
 
   prval pf_thrmisc = view@thrmisc
   val addr_thrmisc = addr@thrmisc
