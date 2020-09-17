@@ -9,6 +9,7 @@ The SCTP layer does improper checking when an application tries to update a shar
 * If `skey->deactivated` or `skey->refcount > 1`, the skey can't be replaced
 * But the code does replace `skey`, but it doesn't be freed, because `skey->refcount > 1`
 * The `skey` may causes use-after-free
+* xxx Why need `refcount`?
 
 ## Resolution
 
