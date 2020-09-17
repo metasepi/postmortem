@@ -13,7 +13,7 @@ The SCTP layer does improper checking when an application tries to update a shar
 
 ## Resolution
 
-xxx
+* [VeriFast avoid this issue](./Resolution/VeriFast)
 
 ## File
 
