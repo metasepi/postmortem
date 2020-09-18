@@ -2,6 +2,7 @@
 
 ## ATS
 
+* Artyom Shalkhakov
 * Dambaev Alexander
 * Hongwei Xi
 
