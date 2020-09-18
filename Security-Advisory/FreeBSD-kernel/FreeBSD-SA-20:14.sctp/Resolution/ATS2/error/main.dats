@@ -3,17 +3,17 @@
 
 #define EBUSY 16
 
-typedef sctp_shared_key = @{ refcount = uint, deactivated = uint }
+typedef sctp_shared_key (r:int) = @{refcount = uint r, deactivated = uint}
 
-fun sctp_alloc_sharedkey (): [l:addr] (sctp_shared_key @ l | ptr l) =
+fun sctp_alloc_sharedkey (): [l:addr][r:int] (sctp_shared_key(r) @ l | ptr l) =
   undefined ()
-extern fun sctp_force_free_sharedkey {l:addr} (pf_skey: sctp_shared_key @ l | skey: ptr l): void = "mac#free"
-extern fun sctp_free_sharedkey {l:addr} (pf_skey: sctp_shared_key @ l | skey: ptr l): void = "mac#free"
+extern fun sctp_force_free_sharedkey {l:addr}{r:int} (pf_skey: sctp_shared_key(r) @ l | skey: ptr l): void = "mac#free"
+extern fun sctp_free_sharedkey {l:addr}{r:int | r <= 1} (pf_skey: sctp_shared_key(r) @ l | skey: ptr l): void = "mac#free"
 (* xxx TODO:
  * How to specify `!skey.refcount <= 1` *)
 
-fun sctp_insert_sharedkey {l:addr} (pf_skey: !sctp_shared_key @ l >> option_v (sctp_shared_key @ l, n != 0) | skey: ptr l): #[n:int] int n =
-  if !skey.deactivated != 0 && !skey.refcount > 1
+fun sctp_insert_sharedkey {l:addr}{r:int} (pf_skey: !sctp_shared_key(r) @ l >> option_v (sctp_shared_key(r) @ l, n != 0) | skey: ptr l): #[n:int] int n =
+  if !skey.deactivated != 0 || !skey.refcount > 1
   then let
       prval () = pf_skey := Some_v pf_skey
     in
