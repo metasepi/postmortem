@@ -13,6 +13,7 @@ The SCTP layer does improper checking when an application tries to update a shar
 
 ## Resolution
 
+* [ATS2 avoid this issue](./Resolution/ATS2)
 * [VeriFast avoid this issue](./Resolution/VeriFast)
 
 ## File
