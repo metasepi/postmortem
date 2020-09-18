@@ -1,4 +1,4 @@
-# FreeBSD-SA-19:14.freebsd32Postmortem
+# FreeBSD-SA-19:14.freebsd32 Postmortem
 
 ## Summary
 
