@@ -12,6 +12,8 @@ The code which performs this operation failed to release a reference obtained on
 
 ## Resolution
 
+* [VeriFast avoid this issue](./Resolution/VeriFast)
+
 xxx
 
 ## File
