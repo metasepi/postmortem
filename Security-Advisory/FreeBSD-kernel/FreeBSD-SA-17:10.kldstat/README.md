@@ -11,7 +11,8 @@ The kernel does not properly clear the memory of the kld_file_stat structure bef
 
 ## Resolution
 
-xxx
+* [ATS2 avoid this issue](./Resolution/ATS2)
+* VeriFast can't avoid this issue
 
 ## File
 
