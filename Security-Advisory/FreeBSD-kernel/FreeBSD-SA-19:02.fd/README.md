@@ -12,9 +12,8 @@ The code which performs this operation failed to release a reference obtained on
 
 ## Resolution
 
+* [ATS2 avoid this issue](./Resolution/ATS2)
 * [VeriFast avoid this issue](./Resolution/VeriFast)
-
-xxx
 
 ## File
 
