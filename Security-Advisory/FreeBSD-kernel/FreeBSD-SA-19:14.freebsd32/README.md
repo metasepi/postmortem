@@ -11,7 +11,7 @@ Due to insufficient initialization of memory copied to userland in the component
 
 ## Resolution
 
-xxx
+* [ATS2 avoid this issue](./Resolution/ATS2)
 
 ## File
 
@@ -19,9 +19,9 @@ xxx
 
 ## Timeline
 
-### Mon Jul 22 18:14:34 2019 UTC
+### Mon Jul 22 18:14:34 2019 +0000
 
-https://svnweb.freebsd.org/base?view=revision&revision=r350217
+https://github.com/freebsd/freebsd/commit/434d0d10e85bc9187b363d8f246acfc143466444
 
 Fixed by emaste.
 
