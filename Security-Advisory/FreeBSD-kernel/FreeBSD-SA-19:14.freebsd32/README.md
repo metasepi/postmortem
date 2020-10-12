@@ -12,6 +12,7 @@ Due to insufficient initialization of memory copied to userland in the component
 ## Resolution
 
 * [ATS2 avoid this issue](./Resolution/ATS2)
+* VeriFast can't avoid this issue
 
 ## File
 
