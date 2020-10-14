@@ -12,7 +12,7 @@ fun fdclose {l:addr} (pf_fp: !struct_file@l | fp: ptr l): void =
 fun fget (): [l:addr][i:int] (option_v(struct_file@l, i == 0) | ptr l, int i) =
   undefined()
 
-fun sys_kmq_timedreceive (): int = let
+fun m_dispose_extcontrolm (): int = let
     fun loop {n:int | n >= 0} (nfd: int n): void =
       if nfd <= 0 then ()
       else let
