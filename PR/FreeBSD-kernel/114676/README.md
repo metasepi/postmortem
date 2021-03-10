@@ -6,11 +6,12 @@ https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=114676
 
 ## Root Causes
 
-* Ignore me, because fixed by 253158
+* Fixed by 253158
+* Difficult
 
 ## Resolution
 
-* Ignore me
+* None
 
 ## Timeline
 
