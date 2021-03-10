@@ -1,4 +1,4 @@
-SUBDIRS := Security-Advisory
+SUBDIRS := PR Security-Advisory
 
 all clean:
 	$(foreach i,$(SUBDIRS),$(MAKE) -C $i $@ &&) true
