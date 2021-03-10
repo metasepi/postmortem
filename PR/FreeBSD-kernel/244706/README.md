@@ -11,4 +11,4 @@ https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=244706
 
 ## Resolution
 
-* xxx At-view and separation logic may avoid miss dereference
+* xxx At-view and separation logic may avoid miss dereference on `m->lock_object.lo_name`
