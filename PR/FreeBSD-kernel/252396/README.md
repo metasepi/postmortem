@@ -10,7 +10,7 @@ https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=252396
 
 ## Resolution
 
-* xxx  At-view and separation logic may avoid NULL dereference
+* xxx At-view and separation logic may avoid NULL dereference
 
 ## Timeline
 
