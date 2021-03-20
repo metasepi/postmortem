@@ -6,7 +6,7 @@ https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=252958
 
 ## Root Causes
 
-* Divide by zero occurs with `recover_fs = 0`
+* Divide by zero occurs with `recover_fs = 0` on `tcp_prr_partialack()`
 
 ## Resolution
 
