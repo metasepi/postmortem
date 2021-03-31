@@ -8,10 +8,12 @@ https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=205320
 
 * Did not use no-atomic operator for `u64` type
 * Should use `counter_u64_foo()` function for `u64` type
+* But the developer can't find that they should use `u64` instead of `u_int64_t`
+* Difficult
 
 ## Resolution
 
-* xxx Use special function or operator overload for `u64` type
+* None
 
 ## Timeline
 
