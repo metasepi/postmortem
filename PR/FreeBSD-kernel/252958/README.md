@@ -10,7 +10,8 @@ https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=252958
 
 ## Resolution
 
-* xxx Statically verify right value of division is not zero
+* Statically verify right value of division is not zero
+* [ATS2 avoid this issue](./Resolution/ATS2)
 
 ## Timeline
 

@@ -11,7 +11,8 @@
 
 ## Resolution
 
-* xxx Introduce different type onto the flags
+* Introduce different type onto the flags
+* [ATS2 avoid this issue](./Resolution/ATS2)
 
 ## Timeline
 
