@@ -7,10 +7,12 @@ https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=252539
 ## Root Causes
 
 * Miss use a function to change unit of time
+* But `sbintime_t` should support `{,M,U,N}SECONDS`
+* Difficult
 
 ## Resolution
 
-* xxx Add static type to return value has unit of time
+* None
 
 ## Timeline
 
