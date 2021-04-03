@@ -7,10 +7,12 @@ https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=253272
 ## Root Causes
 
 * `cmci_monitor()` accesses global value `cmc_state` which is NULL
+* Hard to check NULL on global value statically
+* Difficult
 
 ## Resolution
 
-* xxx Should check global value is not NULL statically
+* None
 
 ## Timeline
 
