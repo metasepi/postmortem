@@ -13,7 +13,8 @@ https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=216510
 
 ## Resolution
 
-* xxx Use safe mutex
+* Use safe lock
+* [ATS2 avoid this issue](./Resolution/ATS2)
 
 ## Timeline
 
