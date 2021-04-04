@@ -9,6 +9,12 @@ https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=253800
 * Page fault at boot
 * Miss memmory access at `rtsock_routemsg`
 * Following patches fixed this issue?
+* The `rt` argument may be NULL
+
+```c
+int rtsock_routemsg(int cmd, struct rtentry *rt, struct nhop_object *nh, int fibnum)
+```
+
 
 ## Resolution
 
