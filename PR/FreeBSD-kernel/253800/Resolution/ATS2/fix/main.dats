@@ -24,17 +24,21 @@ int =
 
 fun rib_del_route
 {l:addr}
-(pf: !rib_cmd_info@l | rc: ptr l):
+(pf: !rib_cmd_info? >> rib_cmd_info @ l | rc: ptr l):
 int =
-  0
+  undefined()
 
 fun rib_action
 {l:addr}
-(pf: !rib_cmd_info@l | action: int, rc: ptr l):
+(pf: !rib_cmd_info? >> rib_cmd_info @ l | action: int, rc: ptr l):
 int =
   case+ action of
     | RTM_DELETE => rib_del_route(pf | rc)
     | _ => ENOTSUP
 
 implement main0 () = {
+  var rc: rib_cmd_info
+  prval pfrc = view@rc
+  val error = rib_action(pfrc | RTM_DELETE, addr@rc)
+  prval () = view@rc := pfrc
 }
