@@ -1,6 +1,9 @@
 #include "share/atspre_define.hats"
 #include "share/atspre_staload.hats"
 
+#define RTM_DELETE 0x2
+#define ENOTSUP 45
+
 typedef rtentry = @{
   member_a = int
 }
@@ -18,6 +21,20 @@ fun rtsock_routemsg
 (pfrt: !rtentry@l1, pfnh: !nhop_object@l2 | cmd: int, rt: ptr l1, nh: ptr l2, fibnum: int):
 int =
   cmd + !rt.member_a + !nh.member_b
+
+fun rib_del_route
+{l:addr}
+(pf: !rib_cmd_info@l | rc: ptr l):
+int =
+  0
+
+fun rib_action
+{l:addr}
+(pf: !rib_cmd_info@l | action: int, rc: ptr l):
+int =
+  case+ action of
+    | RTM_DELETE => rib_del_route(pf | rc)
+    | _ => ENOTSUP
 
 implement main0 () = {
 }
