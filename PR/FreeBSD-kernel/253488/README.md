@@ -12,7 +12,8 @@ https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=253488
 
 ## Resolution
 
-* xxx At-view or tagged union may be useful
+* At-view or tagged union may be useful
+* [ATS2 avoid this issue](./Resolution/ATS2)
 
 ## Timeline
 
