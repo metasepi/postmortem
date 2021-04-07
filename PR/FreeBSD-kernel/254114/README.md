@@ -7,11 +7,12 @@ https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=254114
 ## Root Causes
 
 * Page fault occurs on `wg_input()`
-* `struct sockaddr *srcsa` may be `struct sockaddr_in` or `srcsa->sa_family`
+* The patch is not simple
+* Difficult
 
 ## Resolution
 
-* xxx At-view or tagged union may be useful
+* None
 
 ## Timeline
 
