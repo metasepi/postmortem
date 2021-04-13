@@ -10,7 +10,8 @@ https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=252396
 
 ## Resolution
 
-* xxx At-view and separation logic may avoid NULL dereference
+* ATS2 cann't avoid this issue, because view on at-view is not useful
+* Separation logic or Rust may avoid NULL dereference
 
 ## Timeline
 
