@@ -8,10 +8,12 @@ https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=253848
 
 * KASSERT occurs panic in `tcp_sack_doack()`
 * Miss initialize `tp->sackhint.sack_bytes_rexmit = 0`
+* But the initialization is the root cause?
+* Difficult to prove invariant `while (sblkp >= sack_blocks && cur != NULL)`
 
 ## Resolution
 
-* xxx Statically check KASSERT on loop invariant or precondition
+* None
 
 ## Timeline
 
