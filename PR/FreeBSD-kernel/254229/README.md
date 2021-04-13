@@ -8,10 +8,11 @@ https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=254229
 
 * Causes panic "malloc(M_WAITOK) with sleeping prohibited" at `malloc_dbg()`
 * KASSERT occurs panic in `malloc_dbg()`
+* Hard to assert `(flags & M_WAITOK) && __curthread()->td_no_sleeping != 0`
 
 ## Resolution
 
-* xxx Statically check KASSERT. But it may be hard
+* None
 
 ## Timeline
 
