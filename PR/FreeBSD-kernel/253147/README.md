@@ -7,11 +7,12 @@ https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=253147
 ## Root Causes
 
 * `free()` occurs panic
-* The `parse_font_info_static` should set `refcount`, not `parse_font_info`
+* The `parse_font_info_static` should set `refcount = 1`, not `parse_font_info`
+* Difficult
 
 ## Resolution
 
-* xxx Statically check `vtozoneslab()` should not return NULL on `slab`
+* None
 
 ## Timeline
 
