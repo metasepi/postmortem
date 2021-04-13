@@ -8,7 +8,9 @@ https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=235665
 
 * `handle_written_inodeblock()` causes panic
 * But it is not fundamentally resolved.
+* Statically check `freefile != NULL && free_inodedep(inodedep) == 0`
+* Difficult
 
 ## Resolution
 
-* xxx Statically avoid to cause panic
+* None
