@@ -1,1 +1,1 @@
-include ../../../../../../mk/ats2-fix.mk
+include ../../../../../../mk/ats2-error.mk
