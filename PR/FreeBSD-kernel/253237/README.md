@@ -8,10 +8,11 @@ https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=253237
 
 * Page fault occurs on `witness_checkorder()`
 * It caused by miss alias atomic function
+* Hard to prove atomic function statically
 
 ## Resolution
 
-* xxx Statically prove atomic function
+* None
 
 ## Timeline
 
