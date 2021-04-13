@@ -8,7 +8,9 @@ https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=250351
 
 * KASSERT occurs panic in `fpudna()`
 * It's not fixed?
+* Can statically check `__curthread()->td_md.md_pcb->pcb_flags`?
+* Difficult
 
 ## Resolution
 
-* xxx Statically check KASSERT. But it may be hard
+* None
