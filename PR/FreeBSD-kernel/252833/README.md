@@ -7,12 +7,13 @@ https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=252833
 ## Root Causes
 
 * `free()` occurs panic
-* Need to set `refcount`
+* Need to set `refcount = 1` on default font
 * And this causes PR 253147
+* Difficult
 
 ## Resolution
 
-* xxx Statically check `vtozoneslab()` should not return NULL on `slab`
+* None
 
 ## Timeline
 
