@@ -8,7 +8,7 @@ https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=244706
 
 * Page fault at `__mtx_lock_sleep`
 * It was fixed, but the reason is not clear
-* The kgdb shows that `owner` which returns `lv_mtx_owner()` has NULL pointer
+* The kgdb shows that `owner` which returns `lv_mtx_owner` has NULL pointer
 
 ## Resolution
 
