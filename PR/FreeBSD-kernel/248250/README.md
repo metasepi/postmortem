@@ -7,10 +7,12 @@ https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=248250
 ## Root Causes
 
 * `uma_zalloc(M_WAITOK)` causes WITNESS warning
+* Can't statically check `witness_warn()`, because the `flags` is passed dynamically
+* Difficult
 
 ## Resolution
 
-* xxx Statically check `witness_warn()`
+* None
 
 ## Timeline
 
