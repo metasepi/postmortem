@@ -10,7 +10,8 @@ https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=253061
 
 ## Resolution
 
-* xxx Statically check KASSERT
+* Statically check KASSERT
+* [ATS2 avoid this issue](./Resolution/ATS2)
 
 ## Timeline
 
