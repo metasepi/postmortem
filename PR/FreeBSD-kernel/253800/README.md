@@ -19,7 +19,8 @@ int rtsock_routemsg(int cmd, struct rtentry *rt, struct nhop_object *nh, int fib
 
 ## Resolution
 
-* xxx At-view and separation logic may avoid page fault
+* ATS2 cann't avoid this issue, because view on at-view is not useful
+* Separation logic or Rust may avoid page fault
 
 ## Timeline
 
