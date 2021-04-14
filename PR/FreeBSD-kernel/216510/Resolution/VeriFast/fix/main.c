@@ -13,10 +13,13 @@ predicate_family_instance thread_run_data(bridge_thread)(struct bridge_softc *br
 @*/
 
 int bridge_delete_member(struct bridge_softc *bridge_softc)
-    //@ requires [1/100]bridge_softc->mutex |-> ?mutex;
-    //@ ensures [1/100]bridge_softc->mutex |-> _;
+    //@ requires [1/100]bridge_softc->mutex |-> ?mutex &*& mutex_held(mutex, ?p, currentThread, ?f) &*& p();
+    //@ ensures [1/100]bridge_softc->mutex |-> mutex &*& mutex_held(mutex, p, currentThread, f) &*& p();
 {
-   return 0;
+    struct mutex *m = bridge_softc->mutex;
+    mutex_release(m);
+    mutex_acquire(m);
+    return 0;
 }
 
 void bridge_clone_destroy(struct bridge_softc *bridge_softc)
